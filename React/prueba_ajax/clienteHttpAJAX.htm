@@ -1,0 +1,65 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <title>Document</title>
+ </head>
+ <body>
+     <div id="divDatos">
+        <button id="btnPedirDatos">Petición Get HTTP</button>
+     </div>
+     <script>
+         let divDatos =document.getElementById("divDatos");
+         let btnPedirDatos =document.getElementById("btnPedirDatos");
+         //Objeto AJAX: Asyncronous Javascript and XML
+         let objAJAX = new XMLHttpRequest();
+         //es lo mismo k btnpedirdatos.addeventListener('click', function(){})
+         btnPedirDatos.onclick = function(){
+                objAJAX.send(); //Lanza la petición de manera asíncrona en
+                                //  otro hilo (subproceso) a tu rollo
+         }
+         objAJAX.onreadystatechange = function (){
+             //AJAX tiene 4 estados, del 1(abrerto) al 4 (terminado)
+             //Estado puede HTTP:200 (OK), 404 (not found), 500 (error del servidor)...
+             alert(`"Estado de los datos: " ${objAJAX.readyState}
+             Estado del HTTP: ${objAJAX.status}`);
+             if(objAJAX.readyState==4){
+                 if(objAJAX.status == 200){
+                 divDatos.style.border='1px solid green';
+                 divDatos.innerHTML = objAJAX.responseText;
+                 //hemos consumido la API REST Express Guay
+
+                 //convertimos el JSON en obj JS y lo mapeamos la coleccion (array)
+                 //en este caso vamos a coger cada documento y ponerlo en texto ["EMAIL@DKM.COM, MARIA", ".."]
+                 //emails en mayusc, con programacion estructurada
+                 let arrayUsu = JSON.parse(objAJAX.responseText);
+                 let arrayMayus = new Array();
+                 for (usu of arrayUsu) {
+                     arrayMayus.push(usu.email.toUpperCase());
+                 }
+                 alert(JSON.stringify(arrayMayus));
+                 //Ahora vamos a hacer lo mismo con programacion funcional
+                 let arrayForEach = new Array();
+                 arrayUsu.forEach ( (usu) =>{
+                     arrayForEach.push(usu.email.toUpperCase());
+                 });
+                 alert(JSON.stringify(arrayForEach));
+
+                 //Otra vez con PROGRAMACION FUNCIONAL PURA Y SEGURA
+                 let arrayMapeao = arrayUsu.map(usu =>usu.email);
+                 alert("forEach" + JSON.stringify(arrayMapeao))
+
+             } else{
+                divDatos.style.border='3px solid red';
+                 divDatos.innerHTML = "La petición ha fallado" ;
+             }
+            }
+         }
+         objAJAX.open('GET', 'http://127.0.0.1:4000/api/usuarios/') //el segundo par. es la url del post.
+                                                                    // la cogemos del postman del add request
+         
+     </script>
+ </body>
+ </html>

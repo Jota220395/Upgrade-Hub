@@ -1,0 +1,15 @@
+
+<div>
+    <h2>{{titulo}}</h2>
+                       <!--variable del hijo //variable del padre -->
+    <app-editar-usuario [usuarioEditado]   =   "usuarioNuevo"><!-- para pasarle el nuevo usuario al componente -->
+    </app-editar-usuario> 
+
+    <input class="boton" type="button" value="Registrar" (click)="registrarAlPulsarClick()">
+</div>
+<span>Datos rellenados:</span>
+<p> {{usuarioNuevo.nombre + " - " + usuarioNuevo.email}}</p>
+
+<div *ngIf="camposInvalidos" class="alert alert-danger">
+    Los campos no son válidos
+</div>

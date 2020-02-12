@@ -1,0 +1,16 @@
+<div>
+  <!--  El ngModel es un double data-binding: Enlaza un input a una variable miembro de la clase. 
+   si modificas el usuario se modifica la variable y viceversa.
+   enlace bidireccional -->
+   
+  <label>Nombre:</label>
+  <input class="label" placeholder="Nombre" [(ngModel)]="usuarioEditado.nombre" required > <br> <!-- para k los datos no expiren al servidor -->
+    
+
+  <label>Email:</label>
+  <input  class="label" type="email" placeholder="email" [(ngModel)]="usuarioEditado.email" required/><br>
+
+  <label class="label">Contraseña:</label>
+  <input  class="label" type="password" placeholder="Contraseña" [(ngModel)]="usuarioEditado.password" required/><br>
+
+</div>

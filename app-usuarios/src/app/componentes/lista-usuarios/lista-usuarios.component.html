@@ -1,0 +1,61 @@
+<div>
+  <h1>Lista de Usuarios</h1>
+  <!-- directivas estructurales (*ngDirectiva): *ngIf y *ngFor (es parecido al foreach)-->
+  <h3 *ngIf="laListaDeUsuarios.length == 0">
+    La lista de usuarios está vacía
+  </h3>
+
+  <div *ngIf="laListaDeUsuarios.length != 0">
+    Cantidad de usuarios: {{laListaDeUsuarios.length}}
+    <br />
+    <table class="tabla">
+      <thead>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Acciones</th>
+        <tr *ngFor="let usu of laListaDeUsuarios; let i = index">
+          <!-- index es p. clave de angular. al usarlo
+                                                              estamos indexando el array de usuarios para 
+                                                              k los botones sepan dónde editar y borrar -->
+          <td>{{usu.nombre}}</td>
+          <td>{{usu.email}}</td>
+          <td>{{usu.password}}</td>
+          <td><input type="button" value="/" (click)="posEditar = i; lanzarEditar(posEditar,usu)">
+            <!-- Cuando el usuario pulsa X, guardamos la posicion de ese usuario(index) -->
+
+            <div  class="editar" *ngIf="posEditar ==i">
+              <app-editar-usuario [usuarioEditado]="usuarioRelleno"></app-editar-usuario>
+              <input class="mod" type="button" value="modificar" (click)="modificar(posEditar, usu); posEditar = -1">
+              <input class="mod" type="button" value="Cancelar" (click)="posEditar = -1">
+
+            </div>
+
+            <input type="button" value="X" (click)="posEliminar = i">
+            <!-- En angular, se puede crear los atributos
+                                                                      y variables directamente cuando se hace un evento -->
+            <div *ngIf="posEliminar == i">
+              <!-- Si la condicion es true, muestrame: -->
+              ¿Estás seguro?
+              <button (click)=" lanzarEliminar(posEliminar, usu); posEliminar = -1;">Sí</button>
+              <!-- al pasarselo como parametro, se convierto en local y no hace falta this -->
+              <button (click)="posEliminar = -1">No</button>
+
+            </div>
+
+          </td>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+<!-- 
+<div class="editar" *ngIf = "posEditar !== i">
+  <h2>Edite los campos</h2>
+  <label>Nombre:</label>
+  <input type="text" placeholder="nombre">
+  <label>Email:</label>
+  <input type="text" placeholder="email">
+  <label class="label">Contraseña:</label>
+  <input type="text" placeholder="contraseña">
+</div> -->

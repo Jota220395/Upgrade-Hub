@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+.tabla{
+    
+    border: 6px solid hotpink;
+    border-radius: 3px;
+   
+}
+
+th{
+    background-color: rgb(233, 179, 206);
+}
+
+h1{
+    color:rgb(131, 7, 94);
+    font-family: serif;
+}
+body{
+    margin-left:100px;
+    margin-right: 100px;
+    
+}
